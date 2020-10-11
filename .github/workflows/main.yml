@@ -52,7 +52,7 @@ jobs:
           command: doc
           args: --all --verbose
       - name: Redirect top-level GitHub Pages
-        run: "echo '<meta http-equiv=\"refresh\" content=\"0; url=futhark_rs/index.html\" />' > target/doc/index.html"
+        run: "echo '<meta http-equiv=\"refresh\" content=\"0; url=futhark/index.html\" />' > target/doc/index.html"
         shell: bash
       - name: GitHub Pages
         uses: crazy-max/ghaction-github-pages@v1
