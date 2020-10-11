@@ -1,0 +1,10 @@
+[package]
+name = "futhark"
+version = "0.1.0"
+authors = ["Michael-F-Bryan <michaelfbryan@gmail.com>"]
+edition = "2018"
+description = "Abstractions to make binding to Futhark code easier."
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
