@@ -1,0 +1,11 @@
+(function() {var implementors = {};
+implementors["aho_corasick"] = [{"text":"impl Hash for Match","synthetic":false,"types":[]}];
+implementors["bindgen"] = [{"text":"impl Hash for RustTarget","synthetic":false,"types":[]},{"text":"impl Hash for EnumVariantValue","synthetic":false,"types":[]},{"text":"impl Hash for IntKind","synthetic":false,"types":[]},{"text":"impl Hash for CodegenConfig","synthetic":false,"types":[]}];
+implementors["clang_sys"] = [{"text":"impl Hash for Version","synthetic":false,"types":[]}];
+implementors["env_logger"] = [{"text":"impl Hash for Target","synthetic":false,"types":[]},{"text":"impl Hash for WriteStyle","synthetic":false,"types":[]}];
+implementors["glob"] = [{"text":"impl Hash for Pattern","synthetic":false,"types":[]},{"text":"impl Hash for MatchOptions","synthetic":false,"types":[]}];
+implementors["humantime"] = [{"text":"impl Hash for Duration","synthetic":false,"types":[]}];
+implementors["log"] = [{"text":"impl Hash for Level","synthetic":false,"types":[]},{"text":"impl Hash for LevelFilter","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Hash for Metadata&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Hash for MetadataBuilder&lt;'a&gt;","synthetic":false,"types":[]}];
+implementors["proc_macro2"] = [{"text":"impl Hash for Ident","synthetic":false,"types":[]}];
+implementors["vec_map"] = [{"text":"impl&lt;V:&nbsp;Hash&gt; Hash for VecMap&lt;V&gt;","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
