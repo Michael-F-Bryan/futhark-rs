@@ -18,6 +18,7 @@ pub struct Build {
 }
 
 impl Build {
+    /// Create a new builder which will compile a futhark file.
     pub fn new<P: Into<PathBuf>>(file: P) -> Self {
         Build {
             file: file.into(),
@@ -28,11 +29,14 @@ impl Build {
         }
     }
 
+    /// Set the backend to generate code for.
     pub fn backend(&mut self, backend: Backend) -> &mut Self {
         self.backend = backend;
         self
     }
 
+    /// Override the executable to invoke the Futhark compiler (`futhark` by
+    /// default).
     pub fn futhark<S>(&mut self, executable: S) -> &mut Self
     where
         S: Into<OsString>,
@@ -61,13 +65,6 @@ impl Build {
         self
     }
 
-    fn name(&self) -> Result<&str, GeneratorError> {
-        self.file
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .ok_or(GeneratorError::BadFilename)
-    }
-
     pub fn generate<P>(&self, out_dir: P) -> Result<(), GeneratorError>
     where
         P: AsRef<Path>,
@@ -81,6 +78,13 @@ impl Build {
         self.generate_bindings(&raw_c_destination, out_dir, name)?;
 
         Ok(())
+    }
+
+    fn name(&self) -> Result<&str, GeneratorError> {
+        self.file
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .ok_or(GeneratorError::BadFilename)
     }
 
     fn compile_futhark(&self, raw_c_destination: &Path) -> Result<(), GeneratorError> {
@@ -149,7 +153,7 @@ impl Build {
             Err(()) => return Err(GeneratorError::BindgenFailed),
         };
 
-        let dest = out_dir.join(format!("{}.rs", name));
+        let dest = out_dir.join(name).with_extension("rs");
         bindings
             .write_to_file(&dest)
             .map_err(|e| GeneratorError::WriteFile {
@@ -173,6 +177,7 @@ impl Default for Backend {
 }
 
 #[derive(Debug)]
+#[non_exhaustive]
 pub enum GeneratorError {
     Command(std::io::Error),
     CompileC(cc::Error),
@@ -267,15 +272,13 @@ fn link_to_native_library(build: &mut cc::Build, name: &'static str) -> Result<(
 }
 
 pub fn default_configure_bindgen(
-    mut builder: bindgen::Builder,
+    builder: bindgen::Builder,
     backend: Backend,
 ) -> Result<bindgen::Builder, GeneratorError> {
-    builder = match backend {
-        Backend::Cuda => include_native_library(builder, "cuda")?,
-        _ => builder,
-    };
-
-    Ok(builder)
+    match backend {
+        Backend::Cuda => include_native_library(builder, "cuda"),
+        _ => Ok(builder),
+    }
 }
 
 fn include_native_library(
